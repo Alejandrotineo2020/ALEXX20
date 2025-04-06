@@ -1,232 +1,281 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Página Producto</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ladran2 Service</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="styles.css">
+    
+        <style>
+            /* Estilos para el modal de finalizar compra */
+            .checkout-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.5);
+                justify-content: center;
+                align-items: center;
+                z-index: 999;
+            }
+    
+            .checkout-modal-content {
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                width: 80%;
+                max-width: 500px;
+            }
+    
+            .checkout-modal .close-btn {
+                float: right;
+                cursor: pointer;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    
+
+<body>
     <header>
-      <h1>Logo</h1>
+        <div class="logo">
+            <i class="fas fa-paw"></i>
+            <h1>Ladran2 Service</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#ofertas">Ofertas</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#carrito"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div class="container-title">Zapatos</div>
-
     <main>
-      <div class="container-img">
-        <img
-          src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-          alt="imagen-producto"
-        />
-      </div>
+        <section class="hero">
+            <h2>Los mejores productos para tu perro</h2>
+            <p>Calidad y confianza para tu mascota</p>
+            <button class="btn-primary">Ver productos</button>
+        </section>
 
-      <div class="container-info-product">
-        <div class="container-price">
-          <span>$95.00</span>
-          <i class="fa-solid fa-angle-right"></i>
-        </div>
-
-        <div class="container-details-product">
-          <div class="form-group">
-            <label for="colour">Color</label>
-            <select name="colour" id="colour">
-              <option disabled selected value="">Escoge una opción</option>
-              <option value="rojo">Rojo</option>
-              <option value="blanco">Blanco</option>
-              <option value="beige">Beige</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="size">Talla</label>
-            <select name="size" id="size">
-              <option disabled selected value="">Escoge una opción</option>
-              <option value="40">40</option>
-              <option value="42">42</option>
-              <option value="43">43</option>
-              <option value="44">44</option>
-              <option value="8.2">8.5</option>
-              <option value="9.5">9.5</option>
-              <option value="7.6">7.5</option>
-            </select>
-          </div>
-          <button class="btn-clean">Limpiar</button>
-        </div>
-
-        <div class="container-add-cart">
-          <div class="container-quantity">
-            <input
-              type="number"
-              placeholder="1"
-              value="1"
-              min="1"
-              class="input-quantity"
-            />
-            <div class="btn-increment-decrement">
-              <i class="fa-solid fa-chevron-up" id="increment"></i>
-              <i class="fa-solid fa-chevron-down" id="decrement"></i>
+        <section id="productos" class="product-section">
+            <h2>Nuestros Productos</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="alimento">Alimentos</button>
+                <button class="filter-btn" data-filter="juguete">Juguetes</button>
+                <button class="filter-btn" data-filter="accesorio">Accesorios</button>
+                <button class="filter-btn" data-filter="cuidado">Cuidado</button>
             </div>
+
+            <div class="product-grid">
+                <!-- Producto 1 -->
+                <div class="product-card" data-category="alimento">
+                    <img src="data:image/jpeg;base64,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" alt="Alimento para perro">
+                    <h3>Alimento Premium pro Omega </h3>
+                    <p class="product-description">Alimento Premium para perros adultos, 1kg</p>
+                    <p class="product-price">$450</p>
+                    <button class="add-to-cart" data-id="1">Añadir al carrito</button>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="product-card" data-category="juguete">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtoM-yCcfXNHhB39n-OpmA6Z4WdTiIktd4MA&s" alt="Juguete para perro">
+                    <h3>Hueso </h3>
+                    <p class="product-description">Hueso para perro un juguete que tu peludo lo amara</p>
+                    <p class="product-price">$200</p>
+                    <button class="add-to-cart" data-id="2">Añadir al carrito</button>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="product-card" data-category="accesorio">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYQYNsbuFIX6TrI-xIQGwkYQcr11I5DCZ8GQ&s" alt="Juguete para perro">
+                    <h3>Collar </h3>
+                    <p class="product-description">Collar para tu estilo de tu Mascota</p>
+                    <p class="product-price">$100</p>
+                    <button class="add-to-cart" data-id="3">Añadir al carrito</button>
+               </div>
+
+               <!-- Producto 4 -->
+               <div class="product-card" data-category="cuidado">
+                    <img src="https://m.media-amazon.com/images/I/61sEwWF8ZhL._AC_UL480_FMwebp_QL65_.jpg" alt="Juguete para perro">
+                    <h3>Shampoo conito </h3>
+                    <p class="product-description">Shampoo de Mango</p>
+                    <p class="product-price">$175</p>
+                    <button class="add-to-cart" data-id="4">Añadir al carrito</button>
+                </div>
+
+                <!-- Producto 5 -->
+                <div class="product-card" data-category="cuidado">
+                  <img src="https://m.media-amazon.com/images/I/71fijQ2nuNL._AC_UL480_FMwebp_QL65_.jpg" alt="Juguete para perro">
+                  <h3>Shampoo conito </h3>
+                  <p class="product-description">Shampoo de Menta </p>
+                  <p class="product-price">$175</p>
+                  <button class="add-to-cart" data-id="5">Añadir al carrito</button>
+                </div>
+                <!-- Producto 6 -->
+                <div class="product-card" data-category="cuidado">
+                  <img src="https://m.media-amazon.com/images/I/716f-Vxg4UL._AC_UL480_FMwebp_QL65_.jpg" alt="Juguete para perro">
+                  <h3>Shampoo Medicado  </h3>
+                  <p class="product-description">Shampoo Medicado para pulgas,Garrapata ayauda al mejoramiento de la piel </p>
+                  <p class="product-price">$200</p>
+                  <button class="add-to-cart" data-id="6">Añadir al carrito</button>
+             </div>
+
+             <!-- Producto 7 -->
+             <div class="product-card" data-category="alimento">
+              <img src="https://static.petnautasloja.com.br/public/nunesagropecuaria/imagens/produtos/daldog-essencial-racas-medias-e-grandes-15kg-2377.png" alt="Juguete para perro">
+              <h3>Alimento Premium DAL DOG  </h3>
+              <p class="product-description">Alimento DAL DOG 15kg</p>
+              <p class="product-price">$750</p>
+              <button class="add-to-cart" data-id="7">Añadir al carrito</button>
+             </div>
+
+              <!-- Producto 8 -->
+             <div class="product-card" data-category="accesorio">
+              <img src="https://m.media-amazon.com/images/I/81d4gz-NmPL._AC_UL960_FMwebp_QL65_.jpg" alt="Juguete para perro">
+              <h3>Paseador  </h3>
+              <p class="product-description">Paseador de nylon para tu mascota </p>
+              <p class="product-price">$580</p>
+              <button class="add-to-cart" data-id="8">Añadir al carrito</button>
+            </div>
+
+            <!-- Producto 9 -->
+            <div class="product-card" data-category="accesorio">
+              <img src="https://m.media-amazon.com/images/I/71hYeMCWhqL._AC_UL480_FMwebp_QL65_.jpg" alt="Juguete para perro">
+              <h3>Pechera </h3>
+              <p class="product-description">Pechera para tu mascota</p>
+              <p class="product-price">$300</p>
+              <button class="add-to-cart" data-id="9">Añadir al carrito</button>
+          </div> 
+
+            <!-- Producto 10 -->
+            <div class="product-card" data-category="accesorio">
+              <img src="https://m.media-amazon.com/images/I/619T-9oPE-L._AC_UL480_FMwebp_QL65_.jpg" alt="Juguete para perro">
+              <h3>Correa rectractil </h3>
+              <p class="product-description">correa rectractil para controlar la ansiedad de tu mascota </p>
+              <p class="product-price">$500</p>
+              <button class="add-to-cart" data-id="10">Añadir al carrito</button>
           </div>
-          <button class="btn-add-to-cart">
-            <i class="fa-solid fa-plus"></i>
-            Añadir al carrito
-          </button>
+
+          <!-- Producto 11 -->
+          <div class="product-card" data-category="accesorio">
+            <img src="https://m.media-amazon.com/images/I/71yJacEo96L._AC_UL480_FMwebp_QL65_.jpg" alt="Juguete para perro">
+            <h3>Collar de entrenamiento </h3>
+            <p class="product-description">collar de entrenamiento para protecion y defensa  </p>
+            <p class="product-price">$250</p>
+            <button class="add-to-cart" data-id="11">Añadir al carrito</button>
         </div>
 
-        <div class="container-description">
-          <div class="title-description">
-            <h4>Descripción</h4>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="text-description">
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Laboriosam iure provident atque voluptatibus reiciendis quae rerum,
-              maxime placeat enim cupiditate voluptatum, temporibus quis iusto.
-              Enim eum qui delectus deleniti similique? Lorem, ipsum dolor sit
-              amet consectetur adipisicing elit. Sint autem magni earum est
-              dolorem saepe perferendis repellat ipsam laudantium cum assumenda
-              quidem quam, vero similique? Iusto officiis quod blanditiis iste?
-            </p>
-          </div>
-        </div>
-
-        <div class="container-additional-information">
-          <div class="title-additional-information">
-            <h4>Información adicional</h4>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="text-additional-information hidden">
-            <p>-----------</p>
-          </div>
-        </div>
-
-        <div class="container-reviews">
-          <div class="title-reviews">
-            <h4>Reseñas</h4>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="text-reviews hidden">
-            <p>-----------</p>
-          </div>
-        </div>
-
-        <div class="container-social">
-          <span>Compartir</span>
-          <div class="container-buttons-social">
-            <a href="#"><i class="fa-solid fa-envelope"></i></a>
-            <a href="#"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-pinterest"></i></a>
-          </div>
-        </div>
+        <!-- Producto 12 -->
+        <div class="product-card" data-category="accesorio">
+          <img src="https://m.media-amazon.com/images/I/81P6+iFecEL._AC_UL480_FMwebp_QL65_.jpg" alt="Juguete para perro">
+          <h3>Collar de choque  </h3>
+          <p class="product-description">control remoto, rango inigualable de 4 millas, modo de luz nocturna, guía de entrenamiento incluida, 124 niveles de entrenamiento y 4 modos, choque de vibración  </p>
+          <p class="product-price">$1000</p>
+          <button class="add-to-cart" data-id="12">Añadir al carrito</button>
       </div>
+
+      <!-- Producto 13 -->
+      <div class="product-card" data-category="accesorio">
+        <img src="https://m.media-amazon.com/images/I/51T-T4uF-dL._AC_SX679_.jpg" alt="Juguete para perro">
+        <h3>Collar de cadena   </h3>
+        <p class="product-description">Collar de cadena para perros, collar de metal antideslizante para entrenamiento, collar de perro martingala, collares para cachorros para perros de raza XXS XS, S, S, M, L, grande, XL, plateado, XS
+        </p>
+        <p class="product-price">$100</p>
+        <button class="add-to-cart" data-id="13">Añadir al carrito</button>
+    </div>
+
+
+
+                <!-- Más productos... (total 6-8) -->
+            </div>
+        </section>
+
+        <section id="ofertas" class="offers-section">
+            <h2>Ofertas Especiales</h2>
+            <div class="offer-products">
+                <!-- Producto en oferta -->
+            </div>
+        </section>
     </main>
 
-    <section class="container-related-products">
-      <h2>Productos Relacionados</h2>
-      <div class="card-list-products">
-        <div class="card">
-          <div class="card-img">
-            <img
-              src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80"
-              alt="producto-1"
-            />
-          </div>
-          <div class="info-card">
-            <div class="text-product">
-              <h3>Nike - Roshe Run</h3>
-              <p class="category">Footwear, Sneakers</p>
-            </div>
-            <div class="price">$85.00</div>
-          </div>
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <button id="close-cart">&times;</button>
         </div>
-
-        <div class="card">
-          <div class="card-img">
-            <img
-              src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1131&q=80"
-              alt="producto-2"
-            />
-          </div>
-          <div class="info-card">
-            <div class="text-product">
-              <h3>Common Projects Achilles</h3>
-              <p class="category">Footwear, Sneakers</p>
-            </div>
-            <div class="price">$255.00</div>
-          </div>
+        <div class="cart-items">
+            <!-- Items del carrito aparecerán aquí -->
         </div>
-
-        <div class="card">
-          <div class="card-img">
-            <img
-              src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-              alt="producto-3"
-            />
-          </div>
-          <div class="info-card">
-            <div class="text-product">
-              <h3>Adidas - Boston Super OG</h3>
-              <p class="category">Footwear, Sneakers</p>
-            </div>
-            <div class="price">$105.00</div>
-          </div>
+        <div class="cart-total">
+            <p>Total: <span id="total-amount">$0</span></p>
+            <button class="btn-checkout">Finalizar Compra</button>
         </div>
+    </div>
 
-        <div class="card">
-          <div class="card-img">
-            <img
-              src="https://images.unsplash.com/photo-1617606002779-51d866bdd1d1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-              alt="producto-4"
-            />
-          </div>
-          <div class="info-card">
-            <div class="text-product">
-              <h3>Common Projects Achilles</h3>
-              <p class="category">Footwear, Sneakers</p>
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Calle Juan Ehavarria # 13</p>
+                <p><i class="fas fa-phone"></i> 829-933-4910</p>
+                <p><i class="fas fa-envelope"></i> tineoalejandro301@gmail.com</p>
             </div>
-            <div class="price">$250.00</div>
-          </div>
+            <div class="social-media">
+                <h3>Síguenos En Nuestras Redes Sociales </h3>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
         </div>
-      </div>
-    </section>
+    </footer>
 
-    <section class="cart">
-        <h2>Carrito</h2>
-        <ul id="cart-items"></ul>
-        <button id="clear-cart">Vaciar carrito</button>
-      
-        <!-- Formulario para realizar la compra -->
-        <div class="checkout">
-          <h3>Proceso de Compra</h3>
-          <form id="checkout-form">
-            <div>
-              <label for="payment-method">Método de pago</label>
-              <select id="payment-method" required>
-                <option value="efectivo">Pago en efectivo</option>
-                <!-- Aquí puedes añadir otros métodos de pago en el futuro -->
-              </select>
-            </div>
-      
-            <div>
-              <label for="location">Ubicación (Dirección)</label>
-              <textarea id="location" required></textarea>
-            </div>
-      
-            <button type="submit" id="complete-purchase">Finalizar compra</button>
-          </form>
-        </div>
-      </section>
-      
-
-    <script
-      src="https://kit.fontawesome.com/81581fb069.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="index.js"></script>
-  </body>
+    <script src="script.js"></script>
+    <!-- Modal para finalizar compra -->
+<div id="checkout-modal" class="checkout-modal">
+  <div class="checkout-content">
+      <h3>Finalizar Compra</h3>
+      <form id="checkout-form">
+          <div class="form-group">
+              <label for="ubicacion">Ubicación para entrega:</label>
+              <input type="text" id="ubicacion" required placeholder="Ingrese su dirección completa">
+          </div>
+          
+          <div class="payment-methods">
+              <h4>Método de pago:</h4>
+              <div class="payment-method">
+                  <input type="radio" id="efectivo" name="metodo-pago" value="efectivo" required>
+                  <label for="efectivo">Efectivo</label>
+              </div>
+              <div class="payment-method">
+                  <input type="radio" id="tarjeta" name="metodo-pago" value="tarjeta">
+                  <label for="tarjeta">Tarjeta</label>
+              </div>
+          </div>
+          
+          <div class="form-group" id="tarjeta-info" style="display:none;">
+              <label for="numero-tarjeta">Número de tarjeta:</label>
+              <input type="text" id="numero-tarjeta" placeholder="1234 5678 9012 3456">
+              
+              <label for="fecha-expiracion">Fecha de expiración:</label>
+              <input type="text" id="fecha-expiracion" placeholder="MM/AA">
+              
+              <label for="cvv">CVV:</label>
+              <input type="text" id="cvv" placeholder="123">
+          </div>
+          
+          <div class="checkout-buttons">
+              <button type="button" class="cancel-btn" id="cancel-checkout">Cancelar</button>
+              <button type="submit" class="confirm-btn">Confirmar Compra</button>
+          </div>
+      </form>
+  </div>
+</div>
+</body>
 </html>
-
